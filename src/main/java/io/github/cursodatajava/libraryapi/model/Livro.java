@@ -36,7 +36,8 @@ public class Livro {
     @Column(name = "preco", precision = 18, scale = 2)
     private BigDecimal preco;
 
-    @ManyToOne // Muitos livros para um autor
-    @JoinColumn(name = "id_autor", nullable = false)
+    //@ManyToOne // Muitos livros para um autor
+    //@JoinColumn(name = "id_autor", nullable = false)
+    @Transient // Transient = ignora a coluna
     private Autor autor;
 }
