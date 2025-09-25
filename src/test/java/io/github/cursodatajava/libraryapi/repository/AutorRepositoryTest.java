@@ -20,10 +20,8 @@ public class AutorRepositoryTest {
     public void salvarTest(){
         Autor autor = new Autor();
         autor.setNome("Maria");
-        // Metodo construtor nativo para criar datas staticas
         autor.setDataNascimento(LocalDate.of(1999, 12, 10));
         autor.setNacionalidade("Brasileira");
-
         var autorSalvo = repository.save(autor);
         System.out.println("Autor Salvo" + autorSalvo);
     }
@@ -35,10 +33,8 @@ public class AutorRepositoryTest {
         Optional<Autor> possivelAutor = repository.findById(id);
 
         if(possivelAutor.isPresent()){
-
             Autor autorEncontrado = possivelAutor.get();
             System.out.println(autorEncontrado);
-
             autorEncontrado.setDataNascimento(LocalDate.of(2001, 1, 30));
             repository.save(autorEncontrado);
         }
@@ -65,6 +61,8 @@ public class AutorRepositoryTest {
             repository.deleteById(id);
         }
     }
+
+
 
     @Test
     public void deletePorObjetoTeste(){

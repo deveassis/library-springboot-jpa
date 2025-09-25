@@ -24,15 +24,17 @@ public class Autor {
     @Column(name = "nome", length = 100, nullable = false)
     private String nome;
 
+
     @Column(name = "data_nascimento", nullable = false)
     private LocalDate dataNascimento;
 
     @Column(name = "nacionalidade", nullable = false, length = 50)
     private String nacionalidade;
 
-   // @OneToMany(mappedBy = "autor") // Um autor para muitos livros, mapeado atraves da propriedade autor da classe Livro
-   @Transient // Transient = ignora a coluna
+   @OneToMany(mappedBy = "autor") // Um autor para muitos livros, mapeado atraves da propriedade autor da classe Livro
     private List<Livro> livros; // isto nao e uma coluna
+
+
 
     public UUID getId() {
         return id;
