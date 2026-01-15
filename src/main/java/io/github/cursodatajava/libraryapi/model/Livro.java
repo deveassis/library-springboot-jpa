@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -14,6 +15,7 @@ import java.util.UUID;
 @Data // aqui com o Data ja gera o getter setter e outros necessarios
 @Getter
 @Setter
+@ToString(exclude = "autor") // exclui o autor do toString para evitar loop infinito
 public class Livro {
     public UUID getId() {
         return id;

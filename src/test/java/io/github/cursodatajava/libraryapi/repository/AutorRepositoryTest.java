@@ -1,11 +1,16 @@
 package io.github.cursodatajava.libraryapi.repository;
 
 import io.github.cursodatajava.libraryapi.model.Autor;
+import io.github.cursodatajava.libraryapi.model.GeneroLivro;
+import io.github.cursodatajava.libraryapi.model.Livro;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -15,6 +20,9 @@ public class AutorRepositoryTest {
 
     @Autowired
     AutorRepository repository;
+
+    @Autowired
+    LivroRepository livroRepository;
 
     @Test
     public void salvarTest(){
@@ -70,6 +78,50 @@ public class AutorRepositoryTest {
         var objeto = repository.findById(id).get();
         repository.delete(objeto);
     }
+
+    @Test
+    void salvarAutorComLivrosTest() {
+
+        Autor autor = new Autor();
+        autor.setNome("Antonio");
+        autor.setDataNascimento(LocalDate.of(1997, 12, 10));
+        autor.setNacionalidade("Brasileiro");
+
+        Livro livro = new Livro();
+        livro.setIsbn("1234-5678");
+        livro.setTitulo("O TEYUN");
+        livro.setPreco(new BigDecimal("10.40"));
+        livro.setGenero(GeneroLivro.MISTERIO);
+        livro.setDataPublicacao(LocalDate.of(2026, 1, 15));
+        livro.setAutor(autor); // 🔥 lado dono
+
+        Livro livro2 = new Livro();
+        livro2.setIsbn("9876-5432");
+        livro2.setTitulo("A CASA DA SUA TIA");
+        livro2.setGenero(GeneroLivro.FANTASIA);
+        livro2.setPreco(new BigDecimal("20.50"));
+        livro2.setDataPublicacao(LocalDate.of(2025, 5, 20));
+        livro2.setAutor(autor); // 🔥 lado dono
+
+        autor.setLivros(new ArrayList<>());
+        autor.getLivros().add(livro);
+        autor.getLivros().add(livro2);
+
+        repository.save(autor); // ✅ salva tudo em cascata
+    }
+
+    @Test
+    @Transactional
+    void listarLivros() {
+        var id = UUID.fromString("2efc25e8-6ca5-45f7-9923-78a8528b08a0");
+        var autor = repository.findById(id).get();
+
+        List<Livro> livrosLista = livroRepository.findByAutor(autor);
+        autor.setLivros(livrosLista);
+        autor.getLivros().forEach(System.out::println);
+
+    }
+
 
 
 }

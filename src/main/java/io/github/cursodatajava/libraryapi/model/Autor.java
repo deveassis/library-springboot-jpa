@@ -31,7 +31,7 @@ public class Autor {
     @Column(name = "nacionalidade", nullable = false, length = 50)
     private String nacionalidade;
 
-   @OneToMany(mappedBy = "autor") // Um autor para muitos livros, mapeado atraves da propriedade autor da classe Livro
+   @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, fetch = FetchType.LAZY) // Um autor para muitos livros, mapeado atraves da propriedade autor da classe Livro
     private List<Livro> livros; // isto nao e uma coluna
 
 
