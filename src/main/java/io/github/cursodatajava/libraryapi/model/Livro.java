@@ -92,7 +92,9 @@ public class Livro {
     @Column(name = "preco", precision = 18, scale = 2)
     private BigDecimal preco;
 
-    @ManyToOne(optional = false) // Muitos livros para um autor
+    @ManyToOne(
+            fetch = FetchType.LAZY // traz os dados do auytor junto com o livro
+    ) // Muitos livros para um autor
     @JoinColumn(name = "id_autor", nullable = false)
     private Autor autor;
 }
