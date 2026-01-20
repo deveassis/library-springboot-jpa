@@ -90,4 +90,45 @@ class LivroRepositoryTest {
         List<Livro> lista = livroRepository.findByTitulo("UFO");
         lista.forEach(System.out::println);
     }
+
+    @Test
+    void pesquisarPorISBN(){
+        List<Livro> lista = livroRepository.findByIsbn("8890-7070");
+        lista.forEach(System.out::println);
+    }
+
+    @Test
+    void pesquisarPorTituloEPrecoTeste(){
+        var titulo = "AS TRANCAS DO REI CARECA";
+        var preco = BigDecimal.valueOf(100);
+
+        List<Livro> listaNew = livroRepository.findByTituloAndPreco(titulo, preco);
+        listaNew.forEach(System.out::println);
+    }
+
+    @Test
+    void filtroPorPreco(){
+        var precoInicial = BigDecimal.valueOf(124);
+        var precoFinal = BigDecimal.valueOf(150);
+
+        List<Livro> lista = livroRepository.findByPrecoBetween(precoInicial, precoFinal);
+        lista.forEach(System.out::println);
+
+    }
+
+    @Test
+    void filtroPorDataPublicacao(){
+        var dataInicio = LocalDate.of(2025, 1, 1);
+        var dataFim = LocalDate.of(2026, 12, 31);
+
+        List<Livro> lista = livroRepository.findByDataPublicacaoBetween(dataInicio, dataFim);
+        lista.forEach(System.out::println);
+    }
+
+    @Test
+    void findByTituloLike(){
+        var titulo = "%S TRANCAS%";
+        List<Livro> lista = livroRepository.findByTituloLike(titulo);
+        lista.forEach(System.out::println);
+    }
 }
