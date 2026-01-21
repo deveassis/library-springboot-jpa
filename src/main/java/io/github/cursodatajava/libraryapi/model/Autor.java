@@ -1,6 +1,7 @@
 package io.github.cursodatajava.libraryapi.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -11,9 +12,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "autor", schema="public")
-@Getter // com essa anotation gera automaticamente os getters e setters na compilacao atraves do lombok
-@Setter // com essa anotation gera automaticamente os getters e setters na compilacao atraves do lombok
-@ToString
+@Data
+@ToString(exclude = "livros")
 public class Autor {
 
     @Id // informando que e um id

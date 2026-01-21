@@ -15,6 +15,8 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
+
 @SpringBootTest
 class LivroRepositoryTest {
 
@@ -63,9 +65,7 @@ class LivroRepositoryTest {
     void atualizarAutorDoLivroTeste() {
         Livro livro = livroRepository.findById(UUID.fromString("63d57b8c-ad6d-424d-8f1c-dc40cf1af095")).orElse(null);
         Autor autor = autorRepository.findById(UUID.fromString("755ab1b4-3210-4140-bbcb-4323679b887a")).orElse(null);
-
         livro.setAutor(autor);
-
     }
 
 
@@ -101,7 +101,6 @@ class LivroRepositoryTest {
     void pesquisarPorTituloEPrecoTeste(){
         var titulo = "AS TRANCAS DO REI CARECA";
         var preco = BigDecimal.valueOf(100);
-
         List<Livro> listaNew = livroRepository.findByTituloAndPreco(titulo, preco);
         listaNew.forEach(System.out::println);
     }
@@ -110,7 +109,6 @@ class LivroRepositoryTest {
     void filtroPorPreco(){
         var precoInicial = BigDecimal.valueOf(124);
         var precoFinal = BigDecimal.valueOf(150);
-
         List<Livro> lista = livroRepository.findByPrecoBetween(precoInicial, precoFinal);
         lista.forEach(System.out::println);
 
@@ -127,8 +125,33 @@ class LivroRepositoryTest {
 
     @Test
     void findByTituloLike(){
-        var titulo = "%S TRANCAS%";
-        List<Livro> lista = livroRepository.findByTituloLike(titulo);
+        var titulo = "S TRANCAS";
+        List<Livro> lista = livroRepository.findByTituloLike('%'+ titulo +'%');
         lista.forEach(System.out::println);
+    }
+
+    @Test
+    void listarLivrosComQueryJPQL(){
+        var resultado = livroRepository.listarTodosOrdenadoPorTituloePreco();
+        resultado.forEach(System.out::println);
+    }
+
+
+    @Test
+    void listarAutoresLivroComQueryJPQL(){
+        var resultado = livroRepository.listarAutoresDosLivros();
+        resultado.forEach(System.out::println);
+    }
+
+    @Test
+    void listarTitulosNaoRepetidosDosLivros(){
+        var resultado = livroRepository.listarNomesDiferentesLivros();
+        resultado.forEach(System.out::println);
+    }
+
+    @Test
+    void listarGenerosDeLivrosAutoresBrasileiros(){
+        var resultado = livroRepository.listarGeneroAutoresBrasileiros();
+        resultado.forEach(System.out::println);
     }
 }

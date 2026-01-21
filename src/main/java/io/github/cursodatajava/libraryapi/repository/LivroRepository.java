@@ -3,11 +3,15 @@ package io.github.cursodatajava.libraryapi.repository;
 import io.github.cursodatajava.libraryapi.model.Autor;
 import io.github.cursodatajava.libraryapi.model.Livro;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
+/**
+ * @see LivroRepositoryTest
+ */
 
 public interface LivroRepository extends JpaRepository<Livro, UUID> {
 
@@ -15,7 +19,6 @@ public interface LivroRepository extends JpaRepository<Livro, UUID> {
    List<Livro> findByAutor(Autor autor);
 
    List<Livro> findByTitulo(String titulo);
-
 
    List<Livro> findByIsbn(String isbn);
 
@@ -26,4 +29,28 @@ public interface LivroRepository extends JpaRepository<Livro, UUID> {
    List<Livro> findByDataPublicacaoBetween(LocalDate inicio, LocalDate fim);
 
    List<Livro> findByTituloLike(String titulo);
+
+   // JPQL -> referencia as entidades (Classes) e as propriedades (atributos)
+   @Query("select l from Livro as l order by l.titulo, l.preco ")
+   List<Livro> listarTodosOrdenadoPorTituloePreco();
+
+   /**
+    * select a *
+    * from livro l
+    * join autor a on a.id = l.id_autor
+    */
+   @Query("select a from Livro l join l.autor a")
+   List<Autor> listarAutoresDosLivros();
+
+   // select distinct l.* from livro l
+   @Query("select distinct l.titulo from Livro l")
+   List<String> listarNomesDiferentesLivros();
+
+   @Query("""
+      select l.genero
+      from Livro l
+      join l.autor a
+      where a.nacionalidade = 'Brasileiro' order by l.genero         
+  """)
+   List<String> listarGeneroAutoresBrasileiros();
 }

@@ -13,8 +13,6 @@ import java.util.UUID;
 @Entity
 @Table(name = "livro", schema="public")
 @Data // aqui com o Data ja gera o getter setter e outros necessarios
-@Getter
-@Setter
 @ToString(exclude = "autor") // exclui o autor do toString para evitar loop infinito
 public class Livro {
     public UUID getId() {
