@@ -35,8 +35,8 @@ class LivroRepositoryTest {
         Livro livro = new Livro();
         livro.setIsbn("9090-7070");
         livro.setPreco(BigDecimal.valueOf(100));
-        livro.setGenero(GeneroLivro.FICCAO);
-        livro.setTitulo("UFO");
+        livro.setGenero(GeneroLivro.CIENCIA);
+        livro.setTitulo("PROGRAMACAO COM JAVA");
         livro.setDataPublicacao(LocalDate.of(2025, 9, 24));
         livro.setAutor(autor);
         livroRepository.save(livro);
@@ -47,8 +47,8 @@ class LivroRepositoryTest {
         Livro livro = new Livro();
         livro.setIsbn("8890-7070");
         livro.setPreco(BigDecimal.valueOf(100));
-        livro.setGenero(GeneroLivro.MISTERIO);
-        livro.setTitulo("AS TRANCAS DO REI CARECA");
+        livro.setGenero(GeneroLivro.CIENCIA);
+        livro.setTitulo("PROGRAMACAO COM JAVA");
         livro.setDataPublicacao(LocalDate.of(2026, 1, 15));
 
         Autor autor = new Autor();
@@ -169,10 +169,19 @@ class LivroRepositoryTest {
     @Test
     void listarPorGeneroQueryParamPositionalTest(){
         var resultado = livroRepository.findByGeneroPositionalParameters(
-                GeneroLivro.MISTERIO,
+                GeneroLivro.CIENCIA,
                 "dataPublicacao");
         resultado.forEach(System.out::println);
 
     }
 
+    @Test
+    void deletePorGeneroTest(){
+        livroRepository.deleteByGenero(GeneroLivro.MISTERIO);
+    }
+
+    @Test
+    void updateDataPublicacaoTest(){
+        livroRepository.updateLivro(LocalDate.of(2025, 1, 1));
+    }
 }
