@@ -27,27 +27,28 @@ public class AutorRepositoryTest {
     @Test
     public void salvarTest(){
         Autor autor = new Autor();
-        autor.setNome("Maria");
-        autor.setDataNascimento(LocalDate.of(1999, 12, 10));
-        autor.setNacionalidade("Brasileira");
+        autor.setNome("Gabriel");
+        autor.setDataNascimento(LocalDate.of(1197, 12, 10));
+        autor.setNacionalidade("Brasileiro");
         var autorSalvo = repository.save(autor);
         System.out.println("Autor Salvo" + autorSalvo);
     }
 
-
+    @Transactional
     @Test
     public void atualizarTest(){
-        var id = UUID.fromString("49a78103-f6cb-4317-8cc1-e3a81b0bbc81");
+        var id = UUID.fromString("743fb0ff-0a58-4b05-812a-69c40aaef781");
         Optional<Autor> possivelAutor = repository.findById(id);
-
         if(possivelAutor.isPresent()){
             Autor autorEncontrado = possivelAutor.get();
             System.out.println(autorEncontrado);
-            autorEncontrado.setDataNascimento(LocalDate.of(2001, 1, 30));
+            autorEncontrado.setNome("Gabriel Assis");
+            autorEncontrado.setDataNascimento(LocalDate.of(1997, 12, 10));
             repository.save(autorEncontrado);
         }
     }
 
+    @Transactional
     @Test
     public void listarTest(){
         List<Autor> lista = repository.findAll();

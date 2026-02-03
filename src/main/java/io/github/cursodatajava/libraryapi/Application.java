@@ -17,17 +17,8 @@ public class Application {
 
 	public static void main(String[] args) {
 		var context = SpringApplication.run(Application.class, args);
-		AutorRepository autorRepository = context.getBean(AutorRepository.class);
-		exemploSalvarRegistro(autorRepository);
 	}
 
-	public static void exemploSalvarRegistro(AutorRepository autorRepository){
-		Autor autor = new Autor();
-		autor.setNome("Gabriel");
-		autor.setNacionalidade("Brasileiro");
-		autor.setDataNascimento(LocalDate.of(1997, 12, 10));
-		var autorSalvo = autorRepository.save(autor);
-		System.out.println("Autor salvo com sucesso: " + autorSalvo);
-	}
+
 
 }
