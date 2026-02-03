@@ -157,7 +157,6 @@ class LivroRepositoryTest {
                 GeneroLivro.MISTERIO,
                 "dataPublicacao");
         resultado.forEach(System.out::println);
-
     }
 
 
